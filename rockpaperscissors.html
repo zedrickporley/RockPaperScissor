@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>BATO BATO PICK!!</h1>
+    
+    <div class="choices">
+        <button onclick="playGame('BATO TO PAR')">✊</button>
+        <button onclick="playGame('PAPEL TO PAR')">✋</button>
+        <button onclick="playGame('GUNTING TO PAR')">✌️</button>
+    </div>
+
+    <div id="playerDisplay">PLAYER: </div>
+    <div id="computerDisplay">COMPUTER: </div>
+    <div id="resultDisplay"></div>
+
+    <div class="scoreDisplay">PLAYER SCORE: 
+        <span id="playerScoreDisplay">0</span>
+    </div>
+
+    <div class="scoreDisplay">COMPUTER SCORE: 
+        <span id="computerScoreDisplay">0</span>
+    </div>
+
+    <style>
+
+body{
+    font-family: Arial, monospace;
+    font-weight: bold;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(189, 218, 131);
+}
+h1{
+    font-size: 3.5rem;
+    color: hsl(0, 0%, 20%);
+}
+.choices{
+    margin-bottom: 30px;
+}
+.choices button{
+    font-size: 7.5rem;
+    min-width: 160px;
+    margin: 0 10px;
+    background-color: hsl(126, 100%, 50%);
+    cursor: pointer;
+    transition: background-color 1s ease;
+}
+.choices button:hover{
+    background-color: hsl(200, 100%, 70%);
+}
+#playerDisplay, #computerDisplay{
+    font-size: 2.5rem;
+}
+#resultDisplay{
+    font-size: 5rem;
+    margin: 30px 0;
+}
+.scoreDisplay{
+    font-size: 2rem;
+}
+.greenText, #playerScoreDisplay{
+    color: rgb(208, 255, 0);
+}
+.redText, #computerScoreDisplay{
+    color:red;
+}
+</style>
+
+
+<script >
+
+const choices = ["BATO TO PAR", "PAPEL TO PAR", "GUNTING TO PAR"];
+const playerDisplay = document.getElementById("playerDisplay");
+const computerDisplay = document.getElementById("computerDisplay");
+const resultDisplay = document.getElementById("resultDisplay");
+const playerScoreDisplay = document.getElementById("playerScoreDisplay");
+const computerScoreDisplay = document.getElementById("computerScoreDisplay");
+let playerScore = 0;
+let computerScore = 0;
+
+function playGame(pchoice){
+
+    const computerChoice = choices[Math.floor(Math.random() * 3)];
+    let result = "";
+
+    if(pchoice === computerChoice){
+        result = "IT'S A TIE!";
+    }
+    else{
+        switch(pchoice){
+            case "BATO TO PAR":
+                result = (computerChoice === "GUNTING TO PAR") ? "YOU WIN!" : "YOU LOSE!";
+                break;
+            case "PAPEL TO PAR":
+                result = (computerChoice === "BATO TO PAR") ? "YOU WIN!" : "YOU LOSE!";
+                break;
+            case "GUNTING TO PAR":
+                result = (computerChoice === "PAPEL TO  PAR") ? "YOU WIN!" : "YOU LOSE!";
+                break;
+        }
+    }
+
+    playerDisplay.textContent = `PLAYER: ${pchoice}`;
+    computerDisplay.textContent = `Computer: ${computerChoice}`;
+    resultDisplay.textContent = result;
+
+    resultDisplay.classList.remove("greenText", "redText");
+
+    switch(result){
+        case "YOU WIN!":
+            resultDisplay.classList.add("greenText");
+            playerScore++;
+            playerScoreDisplay.textContent = playerScore;
+            break;
+        case "YOU LOSE!":
+            resultDisplay.classList.add("redText");
+            computerScore++;
+            computerScoreDisplay.textContent = computerScore;
+            break;
+    }
+}
+    </script>
+</body>
+</html>
+
